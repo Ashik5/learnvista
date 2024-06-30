@@ -1,12 +1,12 @@
 import React from "react";
 import Dropdown from "components/dropdown";
 import { FiAlignJustify } from "react-icons/fi";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { FiSearch } from "react-icons/fi";
 import avatar from "assets/img/avatars/avatar4.png";
-
 const Navbar = (props) => {
   const { onOpenSidenav, brandText } = props;
+  const Router = useNavigate();
 
   return (
     <nav className="sticky top-4 z-40 flex flex-row flex-wrap items-center justify-between rounded-xl bg-white/10 p-2 backdrop-blur-xl dark:bg-[#0b14374d]">
@@ -48,7 +48,12 @@ const Navbar = (props) => {
             type="text"
             placeholder="Search..."
             class="block h-full w-full rounded-full bg-lightPrimary text-sm font-medium text-navy-700 outline-none placeholder:!text-gray-400 dark:bg-navy-900 dark:text-white dark:placeholder:!text-white sm:w-fit"
-          />
+            onKeyDown={(e) => {
+              if (e.key === "Enter") {
+                Router(`Books?q=${e.target.value}`);
+            }
+            }}
+         />
         </div>
         <span
           className="flex cursor-pointer text-xl text-gray-600 dark:text-white xl:hidden"
