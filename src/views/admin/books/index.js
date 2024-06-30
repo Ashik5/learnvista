@@ -10,7 +10,7 @@ export default function Books() {
     const location = useLocation();
     const fetchData = async (queryName) => {
         try {
-            const response = await fetch(`/books?name=${queryName}`);
+            const response = await fetch(`https://learnvistaserver.onrender.com/books?name=${queryName}`);
             if (!response.ok) {
                 throw new Error('Network response was not ok');
             }
