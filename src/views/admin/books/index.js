@@ -1,29 +1,35 @@
 import Widget from "components/widget/Widget";
 import { useState, useEffect } from "react";
 import { IoDocuments } from "react-icons/io5";
+import { useLocation } from "react-router-dom";
 
 export default function Books() {
     const [data, setData] = useState(null);
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState(null);
+    const location = useLocation();
+    const fetchData = async (queryName) => {
+        try {
+            const response = await fetch(`/books?name=${queryName}`);
+            if (!response.ok) {
+                throw new Error('Network response was not ok');
+            }
+            const data = await response.json();
+            setData(data);
+        } catch (error) {
+            setError(error);
+        } finally {
+            setLoading(false);
+        }
+    };
 
     useEffect(() => {
-        fetch('https://learnvistaserver.onrender.com/books')
-            .then((response) => {
-                if (!response.ok) {
-                    throw new Error('Network response was not ok');
-                }
-                return response.json();
-            })
-            .then((data) => {
-                setData(data);
-                setLoading(false);
-            })
-            .catch((error) => {
-                setError(error);
-                setLoading(false);
-            });
-    }, []);
+        const query = new URLSearchParams(location.search).get('q') || '';
+        setData(null);
+        setLoading(true);
+        setError(null);
+        fetchData(query);
+    }, [location.search]);
 
     if (loading) {
         return <div>Loading...</div>;
