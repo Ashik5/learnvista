@@ -3,7 +3,7 @@ import React from "react";
 // Admin Imports
 import MainDashboard from "views/admin/default";
 import Profile from "views/admin/profile";
-import DataTables from "views/admin/tables";
+import Books from "views/admin/books";
 
 // Auth Imports
 import SignIn from "views/auth/SignIn";
@@ -25,11 +25,11 @@ const routes = [
     component: <MainDashboard />,
   },
   {
-    name: "Data Tables",
+    name: "Books",
     layout: "/admin",
     icon: <MdBarChart className="h-6 w-6" />,
-    path: "data-tables",
-    component: <DataTables />,
+    path: "Books",
+    component: <Books/>,
   },
   {
     name: "Profile",
