@@ -5,6 +5,7 @@ import Sidebar from "components/sidebar";
 import Dashboard from "views/admin/default";
 import ProfileOverview from "views/admin/profile";
 import Books from "views/admin/books";
+import Reasources from "views/dashboard";
 
 export default function Admin(props) {
   const { ...rest } = props;
@@ -36,6 +37,7 @@ export default function Admin(props) {
                 <Route path="/default" element={<Dashboard/>} />
                 <Route path="/profile" element={<ProfileOverview/>} />
                 <Route path="/books" element={<Books/>} />
+                <Route path="/main-dashboard" element={<Reasources/>} />
                 <Route
                   path="/"
                   element={<Navigate to="/admin/default" replace />}

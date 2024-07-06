@@ -4,6 +4,7 @@ import React from "react";
 import MainDashboard from "views/admin/default";
 import Profile from "views/admin/profile";
 import Books from "views/admin/books";
+import Reasources from "views/dashboard";
 
 // Auth Imports
 import SignIn from "views/auth/SignIn";
@@ -44,6 +45,13 @@ const routes = [
     path: "sign-in",
     icon: <MdLock className="h-6 w-6" />,
     component: <SignIn />,
+  },
+  {
+    name: "Dashboard",
+    layout: "/admin",
+    path: "main-dashboard",
+    icon: <MdLock className="h-6 w-6" />,
+    component: <Reasources/>,
   },
 ];
 export default routes;
