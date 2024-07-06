@@ -45,6 +45,5 @@ const routes = [
     icon: <MdLock className="h-6 w-6" />,
     component: <SignIn />,
   },
-  
 ];
 export default routes;

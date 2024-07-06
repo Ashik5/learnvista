@@ -11,6 +11,7 @@ export default function Admin(props) {
   const [open, setOpen] = React.useState(true);
 
   React.useEffect(() => {
+    
     window.addEventListener("resize", () =>
       window.innerWidth < 1200 ? setOpen(false) : setOpen(true)
     );

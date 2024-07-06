@@ -1,4 +1,4 @@
-import React from "react";
+import { useState, useEffect } from "react";
 import Dropdown from "components/dropdown";
 import { FiAlignJustify } from "react-icons/fi";
 import { Link, useNavigate } from "react-router-dom";
@@ -7,6 +7,51 @@ import avatar from "assets/img/avatars/avatar4.png";
 const Navbar = (props) => {
   const { onOpenSidenav, brandText } = props;
   const Router = useNavigate();
+
+  const [profile, setProfile] = useState({});
+  const handleLogout = async () => {
+    try {
+      const response = await fetch('https://learnvistaserver.onrender.com/auth/logout', {
+        method: 'POST',
+        credentials: 'include', // Ensure credentials are sent
+      });
+
+      if (response.ok) {
+        localStorage.removeItem('isAuthenticated');
+        Router('/auth');
+      } else {
+        console.error('Logout failed:', response.statusText);
+      }
+    } catch (error) {
+      console.error('Error during logout:', error.message);
+    }
+  };
+  useEffect(() => {
+    const fetchProfile = async () => {
+      try {
+        const response = await fetch("https://learnvistaserver.onrender.com/users/profile", {
+          method: "GET",
+          credentials: "include",
+          headers: {
+            "Content-Type": "application/json",
+          },
+        });
+
+        if (!response.ok) {
+          const errorText = await response.text();
+          console.error("Error fetching profile:", errorText);
+          throw new Error(`Failed to fetch profile: ${errorText}`);
+        }
+
+        const data = await response.json();
+        setProfile(data);
+      } catch (error) {
+        console.error("Failed to fetch profile:", error);
+      }
+    };
+
+    fetchProfile();
+  }, []);
 
   return (
     <nav className="sticky top-4 z-40 flex flex-row flex-wrap items-center justify-between rounded-xl bg-white/10 p-2 backdrop-blur-xl dark:bg-[#0b14374d]">
@@ -51,9 +96,9 @@ const Navbar = (props) => {
             onKeyDown={(e) => {
               if (e.key === "Enter") {
                 Router(`Books?q=${e.target.value}`);
-            }
+              }
             }}
-         />
+          />
         </div>
         <span
           className="flex cursor-pointer text-xl text-gray-600 dark:text-white xl:hidden"
@@ -75,25 +120,25 @@ const Navbar = (props) => {
               <div className="p-4">
                 <div className="flex items-center gap-2">
                   <p className="text-sm font-bold text-navy-700 dark:text-white">
-                    👋 Hey, Adela
+                    👋 Hey, {profile.displayName}
                   </p>{" "}
                 </div>
               </div>
               <div className="h-px w-full bg-gray-200 dark:bg-white/20 " />
 
-              <div className="flex flex-col p-4">
+              <div className="flex flex-col p-4 items-start">
                 <a
                   href=" "
                   className="text-sm text-gray-800 dark:text-white hover:dark:text-white"
                 >
                   Settings
                 </a>
-                <a
-                  href=" "
-                  className="mt-3 text-sm font-medium text-red-500 hover:text-red-500 transition duration-150 ease-out hover:ease-in"
+                <button
+                  onClick={handleLogout}
+                  className="mt-3 text-sm font-medium text-red-500 transition duration-150 ease-out hover:text-red-500 hover:ease-in"
                 >
                   Log Out
-                </a>
+                </button>
               </div>
             </div>
           }
