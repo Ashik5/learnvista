@@ -36,7 +36,7 @@ export default function Allbooks() {
             </div>
             <div class="flex-1 w-64 bg-white rounded-lg shadow-md p-3 gap-y-2">
                 <div className='relative'>
-                    <img src={course} alt="Course Image" className="w-full h-auto" />
+                    <img src={course} alt="Course Cover" className="w-full h-auto" />
                     <div className="p-2">
                 
                             <p className="flex items-center text-sm mb-3">

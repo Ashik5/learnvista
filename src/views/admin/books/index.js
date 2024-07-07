@@ -1,7 +1,6 @@
-import Widget from "components/widget/Widget";
 import { useState, useEffect } from "react";
-import { IoDocuments } from "react-icons/io5";
 import { useLocation } from "react-router-dom";
+import BookCard from "components/book";
 
 export default function Books() {
     const [data, setData] = useState(null);
@@ -49,12 +48,7 @@ export default function Books() {
             <div className="mt-3 grid grid-cols-1 gap-5 md:grid-cols-2 lg:grid-cols-3 2xl:grid-cols-3 3xl:grid-cols-6">
                 {
                     data.map((book) => (
-                        <Widget
-                            key={book.id}
-                            icon={<IoDocuments className="h-6 w-6" />}
-                            title={book.authorName}
-                            subtitle={book.Name}
-                        />
+                        <BookCard key={book.id} Name={book.Name} AuthorName={book.authorName} Price={book.price}/>
                     ))
                 }
             </div>
