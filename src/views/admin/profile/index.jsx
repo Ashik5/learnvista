@@ -5,7 +5,7 @@ const ProfileOverview = () => {
   useEffect(() => {
     const fetchProfile = async () => {
       try {
-        const response = await fetch('https://learnvistaserver.onrender.com/users/profile', {
+        const response = await fetch(`${process.env.REACT_APP_BACKEND_URL}/users/profile`, {
           method: 'GET',
           credentials: 'include',
           headers: {
