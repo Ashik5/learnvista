@@ -8,7 +8,7 @@ export default function SignIn() {
   const [userName, setUserName] = useState("");
   const [password, setPassword] = useState("");
   const authSubmit = () => {
-    fetch(`https://learnvistaserver.onrender.com/auth/login`, {
+    fetch(`${process.env.REACT_APP_BACKEND_URL}/auth/login`, {
       method: "POST",
       credentials: 'include',
       headers: {

@@ -11,7 +11,7 @@ const Navbar = (props) => {
   const [profile, setProfile] = useState({});
   const handleLogout = async () => {
     try {
-      const response = await fetch('https://learnvistaserver.onrender.com/auth/logout', {
+      const response = await fetch(`${process.env.REACT_APP_BACKEND_URL}/auth/logout`, {
         method: 'POST',
         credentials: 'include', // Ensure credentials are sent
       });
@@ -29,7 +29,7 @@ const Navbar = (props) => {
   useEffect(() => {
     const fetchProfile = async () => {
       try {
-        const response = await fetch("https://learnvistaserver.onrender.com/users/profile", {
+        const response = await fetch(`${process.env.REACT_APP_BACKEND_URL}/users/profile`, {
           method: "GET",
           credentials: "include",
           headers: {
