@@ -1,6 +1,8 @@
 import { HiX } from "react-icons/hi";
 import Links from "./components/Links";
 import routes from "routes.js";
+import { Link } from "react-router-dom";
+import DashIcon from "components/icons/DashIcon";
 
 const Sidebar = ({ open, onClose }) => {
   return (
@@ -26,6 +28,24 @@ const Sidebar = ({ open, onClose }) => {
 
       <ul className="mb-auto pt-1">
         <Links routes={routes} />
+        <Link to="/addbooks">
+            <div className="relative mb-3 flex hover:cursor-pointer">
+              <li
+                className="my-[3px] flex cursor-pointer items-center px-8"
+              >
+                <span
+                  className={"font-medium text-gray-600"}
+                >
+                  <DashIcon />
+                </span>
+                <p
+                  className={"leading-1 ml-4 flex font-medium text-gray-600"}
+                >
+                  Add Book
+                </p>
+              </li>
+            </div>
+          </Link>
       </ul>
 
       {/* Nav item end */}
