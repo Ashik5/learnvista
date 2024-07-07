@@ -1,5 +1,5 @@
 import React from "react";
-import { Routes, Route, Navigate } from "react-router-dom";
+import { Routes, Route, Navigate} from "react-router-dom";
 import Navbar from "components/navbar";
 import Sidebar from "components/sidebar";
 import Dashboard from "views/admin/default";
