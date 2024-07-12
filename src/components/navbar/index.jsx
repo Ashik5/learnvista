@@ -17,7 +17,6 @@ const Navbar = (props) => {
       });
 
       if (response.ok) {
-        localStorage.removeItem('isAuthenticated');
         Router('/auth');
       } else {
         console.error('Logout failed:', response.statusText);
@@ -40,6 +39,7 @@ const Navbar = (props) => {
         if (!response.ok) {
           const errorText = await response.text();
           console.error("Error fetching profile:", errorText);
+          Router('/auth');
           throw new Error(`Failed to fetch profile: ${errorText}`);
         }
 

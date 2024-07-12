@@ -1,7 +1,7 @@
 export default function BookCard({Name,AuthorName,Price,imgUrl}){
     return(
         <div className='relative'>
-        <img src={`${process.env.REACT_APP_BACKEND_URL}/${imgUrl}`} alt="Course Cover" className="w-full h-auto" />
+        <img src={imgUrl} alt="Course Cover" className="w-full h-auto" />
         <div className="p-2">
             <div className='flex flex-row justify-between'>
                 <p className="text-green-600 font-bold">{Name}</p>
