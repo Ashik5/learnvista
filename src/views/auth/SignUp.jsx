@@ -1,14 +1,14 @@
 import { useState } from "react";
-import { FcGoogle } from "react-icons/fc";
 import Checkbox from "components/checkbox";
 import { useNavigate } from "react-router-dom";
 
-export default function SignIn() {
+export default function SignUp() {
   const Router = useNavigate();
   const [userName, setUserName] = useState("");
+  const [displayName, setDisplayName] = useState("");
   const [password, setPassword] = useState("");
   const authSubmit = () => {
-    fetch(`${process.env.REACT_APP_BACKEND_URL}/auth/login`, {
+    fetch(`${process.env.REACT_APP_BACKEND_URL}/users/`, {
       method: "POST",
       credentials: 'include',
       headers: {
@@ -16,12 +16,13 @@ export default function SignIn() {
       },
       body: JSON.stringify({
         username: userName,
+        displayName : displayName,
         password: password,
       }),
     }).then((res) => {
-      if (res.status === 200) {
+      if (res.status === 201) {
         localStorage.setItem("isAuthenticated", true);
-        Router("/admin");
+        Router("/auth");
       } else {
         console.log("Failed");
       }
@@ -32,23 +33,30 @@ export default function SignIn() {
       {/* Sign in section */}
       <div className="mt-[10vh] w-full max-w-full flex-col items-center md:pl-4 lg:pl-0 xl:max-w-[420px]">
         <h4 className="mb-2.5 text-4xl font-bold text-navy-700 dark:text-white">
-          Sign In
+          Create Account
         </h4>
         <p className="mb-9 ml-1 text-base text-gray-600">
-          Enter your user name and password to sign in!
+          Enter your info to Create Account!
         </p>
         <div className="mb-6 flex items-center  gap-3">
           <div className="h-px w-full bg-gray-200 dark:bg-navy-700" />
           <p className="text-base text-gray-600 dark:text-white"> or </p>
           <div className="h-px w-full bg-gray-200 dark:bg-navy-700" />
         </div>
-        {/* Email */}
         <input
           onChange={(e) => {
             setUserName(e.target.value);
           }}
           type="text"
           placeholder="User Name"
+          className="mb-4 w-full rounded-xl border border-gray-200 p-3 text-sm font-medium text-gray-600 dark:border-navy-700 dark:bg-navy-800 dark:text-white"
+        />
+        <input
+          onChange={(e) => {
+            setDisplayName(e.target.value);
+          }}
+          type="text"
+          placeholder="Display Name"
           className="mb-4 w-full rounded-xl border border-gray-200 p-3 text-sm font-medium text-gray-600 dark:border-navy-700 dark:bg-navy-800 dark:text-white"
         />
         <input
@@ -72,19 +80,8 @@ export default function SignIn() {
           onClick={authSubmit}
           className="linear mt-2 w-full rounded-xl bg-brand-500 py-[12px] text-base font-medium text-white transition duration-200 hover:bg-brand-600 active:bg-brand-700 dark:bg-brand-400 dark:text-white dark:hover:bg-brand-300 dark:active:bg-brand-200"
         >
-          Sign In
+          Create Account
         </button>
-        <div className="mt-4">
-          <span className=" text-sm font-medium text-navy-700 dark:text-gray-600">
-            Not registered yet?
-          </span>
-          <a
-            href="/auth/sign-up"
-            className="ml-1 text-sm font-medium text-brand-500 hover:text-brand-600 dark:text-white"
-          >
-            Create an account
-          </a>
-        </div>
       </div>
     </div>
   );
