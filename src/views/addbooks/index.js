@@ -62,14 +62,7 @@ export default function Addbooks() {
                             <button className="bg-green-500 text-white border-none px-3 py-1 rounded-full cursor-pointer text-lg hover:bg-green-600">Upload Cover Photo</button>
                      </div> 
             </div>
-            
-
-            
-
         </div>
-        </div>
-        
-       
-        
+        </div>    
     )
 }
