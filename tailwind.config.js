@@ -107,7 +107,6 @@ module.exports = {
       },
       fontFamily: {
         poppins: ["Poppins", "sans-serif"],
-        dm: ["DM Sans", "sans-serif"],
       },
       boxShadow: {
         "3xl": "14px 17px 40px 4px",
@@ -136,6 +135,7 @@ module.exports = {
     },
     colors: () => ({
       white: "#ffffff",
+      black: "#000000",
       lightPrimary: "#F4F7FE",
       blueSecondary: "#37ED81",
       brandLinear: "#87F4B3",

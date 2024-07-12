@@ -4,14 +4,11 @@ import AuthLayout from "layouts/auth";
 import Allbooks from "views/allbooks";
 import Checkout from "views/checkout";
 
-import Addbooks from "views/addbooks";
-
 import AddBook from "views/allbooks/addBook";
 
 const App = () => {
   return (
     <Routes>
-      <Route path="addbooks" element={<Addbooks />} />
       <Route path="allbooks" element={<Allbooks />} />
       <Route path="addbooks" element={<AddBook />} />
       <Route path="checkout" element={<Checkout />} />

@@ -48,7 +48,7 @@ export default function Books() {
             <div className="mt-3 grid grid-cols-1 gap-5 md:grid-cols-2 lg:grid-cols-3 2xl:grid-cols-3 3xl:grid-cols-6">
                 {
                     data.map((book) => (
-                        <BookCard key={book.id} Name={book.Name} AuthorName={book.authorName} Price={book.price}/>
+                        <BookCard key={book.id} Name={book.Name} AuthorName={book.authorName} Price={book.price} imgUrl={book.imageUrl}/>
                     ))
                 }
             </div>
