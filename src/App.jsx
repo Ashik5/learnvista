@@ -6,22 +6,16 @@ import Checkout from "views/checkout";
 import Home from "views/landing/home";
 import AddBook from "views/addbooks";
 
-
 const App = () => {
   return (
     <Routes>
-      <Route path="home/" element={<Home />} />
+      <Route path="home/*" element={<Home />} />
       <Route path="allbooks" element={<Allbooks />} />
       <Route path="addbooks" element={<AddBook />} />
       <Route path="checkout" element={<Checkout />} />
-
       <Route path="auth/" element={<AuthLayout />} />
-      <Route path="admin/" element={<AdminLayout />} />
-      <Route path="/" element={<Navigate to="/home" replace />} />
-
-      <Route path="auth/*" element={<AuthLayout />} />
       <Route path="admin/*" element={<AdminLayout />} />
-      <Route path="/" element={<Navigate to="/admin" replace />} />
+      <Route path="/" element={<Navigate to="/home" replace />} />
     </Routes>
   );
 };
