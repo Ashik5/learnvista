@@ -3,12 +3,8 @@ import AdminLayout from "layouts/admin";
 import AuthLayout from "layouts/auth";
 import Allbooks from "views/allbooks";
 import Checkout from "views/checkout";
-
 import Home from "views/landing/home";
 import AddBook from "views/addbooks";
-
-
-import AddBook from "views/allbooks/addBook";
 
 
 const App = () => {
