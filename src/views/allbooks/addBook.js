@@ -4,6 +4,7 @@ export default function AddBook() {
     const Router = useNavigate();
     const [bookName, setBookName] = useState("");
     const [author, setAuthor] = useState("");
+    const [genre, setGenere] = useState("");
     const [price, setPrice] = useState("");
     const addBook = () => {
         fetch(`${process.env.REACT_APP_BACKEND_URL}/books/`, {
@@ -16,6 +17,7 @@ export default function AddBook() {
                 Name: bookName,
                 authorName: author,
                 price: price,
+                genre: genre,
             }),
         }).then((res) => {
             if (res.status === 201) {
@@ -30,7 +32,9 @@ export default function AddBook() {
             <h1>Adding Books</h1>
             <input onChange={(e) => { setBookName(e.target.value) }} type="text" placeholder="Book Name" className="mb-4 w-full rounded-xl border border-gray-200 p-3 text-sm font-medium text-gray-600 dark:border-navy-700 dark:bg-navy-800 dark:text-white" />
             <input onChange={(e) => { setAuthor(e.target.value) }} type="text" placeholder="Author" className="mb-4 w-full rounded-xl border border-gray-200 p-3 text-sm font-medium text-gray-600 dark:border-navy-700 dark:bg-navy-800 dark:text-white" />
+            <input onChange={(e) => { setGenere(e.target.value) }} type="text" placeholder="Genre" className="mb-4 w-full rounded-xl border border-gray-200 p-3 text-sm font-medium text-gray-600 dark:border-navy-700 dark:bg-navy-800 dark:text-white" />
             <input onChange={(e) => { setPrice(e.target.value) }} type="number" placeholder="Price" className="mb-4 w-full rounded-xl border border-gray-200 p-3 text-sm font-medium text-gray-600 dark:border-navy-700 dark:bg-navy-800 dark:text-white" />
+            
             <button onClick={addBook}>Add The Book</button>
         </>
     );

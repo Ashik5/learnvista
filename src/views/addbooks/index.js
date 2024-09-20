@@ -15,6 +15,7 @@ export default function Addbooks() {
     //author and title
     const [author, setAuthor] = useState('');
     const [title, setTitle] = useState('');
+    const [genere, setGenere] = useState("");
 
     const descriptionChange = (e) => {
         const text = e.target.value;
@@ -47,6 +48,7 @@ export default function Addbooks() {
         formData.append('description', description);
         formData.append('image', file);
         formData.append('price', 12000);
+        formData.append('genere', genere);
         fetch(`${process.env.REACT_APP_BACKEND_URL}/books/`, {
             method: "POST",
             credentials: 'include',
@@ -83,6 +85,18 @@ export default function Addbooks() {
                     <div className='flex flex-none py-2' >
                         <input
                             onChange={(e) => setAuthor(e.target.value)}
+                            type="text"
+                            placeholder="Enter the author's name here"
+                            className="border border-gray-300 rounded-md px-5 py-2 focus:outline-gray-500 transition duration-300 ease-in-out hover:border-gray-500 hover:border-2 mr-1 w-[600px]" />
+                    </div>
+                </div>
+                <div className='flex flex-col p-2 px-3'>
+                    <h1 className='font-medium text-xl'>
+                        Genere
+                    </h1>
+                    <div className='flex flex-none py-2' >
+                        <input
+                            onChange={(e) => setGenere(e.target.value)}
                             type="text"
                             placeholder="Enter the author's name here"
                             className="border border-gray-300 rounded-md px-5 py-2 focus:outline-gray-500 transition duration-300 ease-in-out hover:border-gray-500 hover:border-2 mr-1 w-[600px]" />
