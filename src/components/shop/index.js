@@ -57,7 +57,6 @@ export default function Shop() {
         }
         fetchData();
     }, []);
-
     const booksPerPage = 6;
 
     // Calculate the books to display on the current page
