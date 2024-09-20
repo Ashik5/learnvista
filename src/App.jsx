@@ -13,7 +13,7 @@ const App = () => {
       <Route path="allbooks" element={<Allbooks />} />
       <Route path="addbooks" element={<AddBook />} />
       <Route path="checkout" element={<Checkout />} />
-      <Route path="auth/" element={<AuthLayout />} />
+      <Route path="auth/*" element={<AuthLayout />} />
       <Route path="admin/*" element={<AdminLayout />} />
       <Route path="/" element={<Navigate to="/home" replace />} />
     </Routes>
