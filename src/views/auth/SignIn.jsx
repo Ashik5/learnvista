@@ -1,5 +1,4 @@
 import { useState } from "react";
-import { FcGoogle } from "react-icons/fc";
 import Checkbox from "components/checkbox";
 import { useNavigate } from "react-router-dom";
 

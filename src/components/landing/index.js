@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import logo from "assets/img/logo.png";
 import book2 from "assets/img/books/boo2.jpg";
 import { Link } from 'react-router-dom';
@@ -11,13 +11,23 @@ export default function Landing() {
         { icon: '🚀', text: 'retures & exchanges' },
         { icon: '📦', text: 'fast delivery' },
     ];
-    const cardData = [
-        { title: 'Card 1', content: 'Content for card 1', rating: 4.5 },
-        { title: 'Card 2', content: 'Content for card 2', rating: 4.5 },
-        { title: 'Card 3', content: 'Content for card 3', rating: 4.5 },
-        { title: 'Card 4', content: 'Content for card 4', rating: 4.5 },
-        { title: 'Card 5', content: 'Content for card 5', rating: 4.5 },
-    ];
+    const [cardData, setCardData] = useState([]);
+
+    useEffect(() => {
+        async function fetchData() {
+            try {
+                const response = await fetch(`${process.env.REACT_APP_BACKEND_URL}/books`);
+                if (!response.ok) {
+                    throw new Error('Network response was not ok');
+                }
+                const data = await response.json();
+                setCardData(data);
+            } catch (error) {
+                console.error('There was a problem with your fetch operation:', error);
+            }
+        }
+        fetchData();
+    }, []);
     const pricingData = [
         {
             plan: 'Basic',
@@ -192,14 +202,14 @@ export default function Landing() {
                         {cardData.map((card, index) => (
                             <div
                                 key={index}
-                                className="group relative min-w-[300px] bg-white shadow-lg shadow-black/5 p-2 rounded-lg text-center rounded-xl cursor-pointer"
+                                className="group relative w-fit bg-white shadow-lg shadow-black/5 p-2 rounded-lg text-center rounded-xl cursor-pointer"
                             >
-                                <img src={book2} alt="book" className='rounded-md' />
+                                <img src={card.imageUrl} alt="book" className='rounded-md max-w-48' />
                                 <div className="absolute top-4 -right-5 text-yellow-400 bg-white text-xs font-bold px-3 py-1.5 rounded-full z-10">
                                     ★ {card.rating}
                                 </div>
                                 <div className="hidden group-hover:flex absolute w-full h-full bg-black/30 bottom-1/2 left-1/2 transform -translate-x-1/2 translate-y-1/2 px-6 py-2 justify-center items-center gap-1.5 rounded-xl">
-                                    <p className='bg-white px-8 py-2'>$20</p>
+                                    <p className='bg-white px-8 py-2'>${card.price}</p>
                                     <p className='bg-white p-2 hover:bg-black'>🛒</p>
                                 </div>
                             </div>

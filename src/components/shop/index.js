@@ -1,38 +1,98 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import logo from "assets/img/logo.png";
 import { Link } from 'react-router-dom';
-import bookImage from "assets/img/books/boo2.jpg";
-
-
-const books = [
-    { id: 1, title: 'Book 1', price: '$10' },
-    { id: 2, title: 'Book 2', price: '$15' },
-    { id: 3, title: 'Book 3', price: '$20' },
-    { id: 4, title: 'Book 4', price: '$18' },
-    { id: 5, title: 'Book 5', price: '$12' },
-    { id: 6, title: 'Book 6', price: '$22' },
-    { id: 7, title: 'Book 7', price: '$10' },
-    { id: 8, title: 'Book 8', price: '$15' },
-    { id: 9, title: 'Book 9', price: '$20' },
-    { id: 10, title: 'Book 10', price: '$18' },
-    { id: 11, title: 'Book 11', price: '$12' },
-    { id: 12, title: 'Book 12', price: '$22' },
-];
+import { filter } from '@chakra-ui/system';
 
 export default function Shop() {
     const [currentPage, setCurrentPage] = useState(1);
+    const [books, setBooks] = useState([]);
+    const [filteredBooks, setFilteredBooks] = useState([]);
+    
+    // Filter states
+    const [selectedCategories, setSelectedCategories] = useState([]);
+    const [priceRange, setPriceRange] = useState([10, 100]);
+    const [selectedRating, setSelectedRating] = useState(null);
+    const [availability, setAvailability] = useState(null);
+
+
+    // Filter the books when any filter changes
+    useEffect(() => {
+        const filterBooks = async () => {
+            let updatedBooks = books;
+    
+            // Filter by category
+            if (selectedCategories.length > 0) {
+                updatedBooks = updatedBooks.filter(book =>{
+                    return selectedCategories.includes(book.genere)}
+                );
+            }
+
+            // Filter by price range
+            updatedBooks = updatedBooks.filter(book => {
+                console.log(priceRange);
+                return book.price >= priceRange[0] && book.price <= priceRange[1];
+            }
+            );
+    
+            setFilteredBooks(updatedBooks);
+        };
+    
+        // Call the asynchronous filter function
+        filterBooks();
+    }, [selectedCategories,priceRange]);
+    
+    useEffect(() => {
+        async function fetchData() {
+            try {
+                const response = await fetch(`${process.env.REACT_APP_BACKEND_URL}/books`);
+                if (!response.ok) {
+                    throw new Error('Network response was not ok');
+                }
+                const data = await response.json();
+                setBooks(data);
+                setFilteredBooks(data); // Initialize filteredBooks with all books
+            } catch (error) {
+                console.error('There was a problem with your fetch operation:', error);
+            }
+        }
+        fetchData();
+    }, []);
     const booksPerPage = 6;
 
     // Calculate the books to display on the current page
     const indexOfLastBook = currentPage * booksPerPage;
     const indexOfFirstBook = indexOfLastBook - booksPerPage;
-    const currentBooks = books.slice(indexOfFirstBook, indexOfLastBook);
+    const currentBooks = filteredBooks.slice(indexOfFirstBook, indexOfLastBook);
 
     // Calculate total pages
-    const totalPages = Math.ceil(books.length / booksPerPage);
+    const totalPages = Math.ceil(filteredBooks.length / booksPerPage);
 
     // Handle pagination click
     const paginate = (pageNumber) => setCurrentPage(pageNumber);
+
+    // Handle category filter change
+    const handleCategoryChange = (category) => {
+        setSelectedCategories(prev =>
+            prev.includes(category)
+                ? prev.filter(c => c !== category)
+                : [...prev, category]
+        );
+    };
+
+    // Handle price range change
+    const handlePriceChange = (e) => {
+        setPriceRange([1000, e.target.value]);
+    };
+
+    // Handle rating change
+    const handleRatingChange = (rating) => {
+        setSelectedRating(rating);
+    };
+
+    // Handle availability change
+    const handleAvailabilityChange = (isInStock) => {
+        setAvailability(isInStock);
+    };
     return (
         <>
             <div
@@ -111,31 +171,32 @@ export default function Shop() {
                         <div className="mb-6">
                             <h4 className="font-medium mb-2">Category</h4>
                             <ul className="space-y-2">
-                                <li><label><input type="checkbox" className="mr-2" /> Fiction</label></li>
-                                <li><label><input type="checkbox" className="mr-2" /> Non-Fiction</label></li>
-                                <li><label><input type="checkbox" className="mr-2" /> Science</label></li>
-                                <li><label><input type="checkbox" className="mr-2" /> History</label></li>
+                                <li><label><input type="checkbox" className="mr-2" onChange={() => {handleCategoryChange('Fiction')}} /> Fiction</label></li>
+                                <li><label><input type="checkbox" className="mr-2" onChange={() => {handleCategoryChange('Non-Fiction')}}/> Non-Fiction</label></li>
+                                <li><label><input type="checkbox" className="mr-2" onChange={() => {handleCategoryChange('Science')}}/> Science</label></li>
+                                <li><label><input type="checkbox" className="mr-2" onChange={() => {handleCategoryChange('History')}}/> History</label></li>
                             </ul>
                         </div>
 
                         {/* Filter by Price */}
                         <div className="mb-6">
                             <h4 className="font-medium mb-2">Price Range</h4>
-                            <input type="range" min="10" max="100" className="w-full" />
+                            <input type="range" min="1000" max="15000" className="w-full" onChange={(e)=>{handlePriceChange(e)}}/>
                             <div className="flex justify-between text-sm text-gray-600">
-                                <span>$10</span>
-                                <span>$100</span>
+                                <span>$1000</span>
+                                <span>$15000</span>
                             </div>
+                            <p>{`${priceRange[0]} - ${priceRange[1]}`}</p>
                         </div>
 
                         {/* Filter by Rating */}
                         <div className="mb-6">
                             <h4 className="font-medium mb-2">Rating</h4>
                             <ul className="space-y-2">
-                                <li><label><input type="radio" name="rating" className="mr-2" /> 4 stars & up</label></li>
-                                <li><label><input type="radio" name="rating" className="mr-2" /> 3 stars & up</label></li>
-                                <li><label><input type="radio" name="rating" className="mr-2" /> 2 stars & up</label></li>
-                                <li><label><input type="radio" name="rating" className="mr-2" /> 1 star & up</label></li>
+                                <li><label><input type="radio" name="rating" className="mr-2" onChange={()=>{handleRatingChange(4)}}/> 4 stars & up</label></li>
+                                <li><label><input type="radio" name="rating" className="mr-2" onChange={()=>{handleRatingChange(3)}}/> 3 stars & up</label></li>
+                                <li><label><input type="radio" name="rating" className="mr-2" onChange={()=>{handleRatingChange(2)}}/> 2 stars & up</label></li>
+                                <li><label><input type="radio" name="rating" className="mr-2" onChange={()=>{handleRatingChange(1)}}/> 1 star & up</label></li>
                             </ul>
                         </div>
 
@@ -152,9 +213,9 @@ export default function Shop() {
                     {/* Right Column: Books */}
                     <div className="md:col-span-3">
                         <div className="grid grid-cols-2 md:grid-cols-3 gap-6">
-                            {currentBooks.map(book => (
-                                <div key={book.id} className="bg-white p-4 rounded-lg border">
-                                    <img src={bookImage} alt={book.title} className="mb-4 w-full h-48 object-cover rounded-md" />
+                            {currentBooks.map((book,index) => (
+                                <div key={index} className="bg-white p-4 rounded-lg border">
+                                    <img src={book.imageUrl} alt={book.title} className="mb-4 w-full h-48 object-cover rounded-md" />
                                     <h3 className="text-lg font-semibold mb-2">{book.title}</h3>
                                     <p className="text-gray-500 mb-2">{book.price}</p>
                                     <button className="bg-blue-600 text-white py-2 px-4 rounded hover:bg-blue-700">Add to Cart</button>
