@@ -99,10 +99,10 @@ export default function Landing() {
     return (
         <>
             <div
-                className="min-h-screen bg-cover bg-center bg-hero"
+                className="min-h-screen bg-cover bg-center relative bg-hero"
             >
                 {/* Navbar */}
-                <nav className="w-full py-4 px-6 md:px-12 flex justify-between items-center bg-transparent z-10">
+                <nav className="relative w-full py-4 px-6 md:px-12 flex justify-between items-center bg-transparent z-10">
                     {/* Left side (logo and menu) */}
                     <div className="flex items-center space-x-32">
                         <a href="/" className="text-2xl font-bold flex items-center space-x-5">
@@ -143,21 +143,22 @@ export default function Landing() {
                 </nav>
 
                 {/* Hero Section */}
-                <div className="flex-1 flex flex-col justify-center items-center py-16 px-6 md:px-12 z-10 gap-10 text-white">
-                    <div className='flex flex-col justify-center items-center'>
-                        <p className="text-lg mb-2 capitalize">Explor your favourite books 📚</p>
-                        <h1 className="text-5xl font-bold mb-4 capitalize w-[50%]">
+                <div className="relative flex-1 flex flex-col justify-between items-start py-16 px-6 md:px-12 z-10 gap-10 w-[50%]">
+                    <div className='h-28'></div>
+                    <div>
+                        <p className="text-lg  mb-2 capitalize">Explor your favourite books 📚</p>
+                        <h1 className="text-5xl font-bold mb-4 capitalize w-[60%]">
                             Get your new book with the best price
                         </h1>
                     </div>
                     {/* Search Bar */}
-                    <div className="mt-8 flex items-center w-[60%] p-1.5 bg-white border rounded-full">
+                    <div className="mt-8 flex items-center w-full p-1.5 bg-white border rounded-full">
                         <input
                             type="text"
                             placeholder="Search..."
                             className="px-6 py-3 w-full rounded-l-full focus:outline-none"
                         />
-                        <button className="px-8 py-3 bg-orange-100 hover:bg-orange-200 rounded-full text-black">
+                        <button className="px-8 py-3 bg-orange-100 hover:bg-orange-200 rounded-full">
                             Search
                         </button>
                     </div>
