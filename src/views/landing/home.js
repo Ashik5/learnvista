@@ -3,13 +3,16 @@ import logo from "assets/img/logo.png";
 import { Routes, Route, Navigate } from "react-router-dom";
 import Landing from 'components/landing';
 import Shop from 'components/shop';
+import Singlebook from 'components/singlebook'
 
 export default function Home() {
     return (
         <>
             <Routes>
                 <Route path="shop" element={<Shop />} />
+                <Route path="singlebook" element={<Singlebook />} />
                 <Route path="/" element={<Landing />} />
+                
             </Routes>
             <footer className="py-12">
                 <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
