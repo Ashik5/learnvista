@@ -4,11 +4,10 @@ import { Link } from 'react-router-dom';
 import { filter } from '@chakra-ui/system';
 
 export default function Shop() {
-
     const [currentPage, setCurrentPage] = useState(1);
     const [books, setBooks] = useState([]);
     const [filteredBooks, setFilteredBooks] = useState([]);
-
+    
     // Filter states
     const [selectedCategories, setSelectedCategories] = useState([]);
     const [priceRange, setPriceRange] = useState([10, 100]);
@@ -16,42 +15,15 @@ export default function Shop() {
     const [availability, setAvailability] = useState(null);
 
 
-    const addToCart = async (book) => {
-        const response = await fetch(`${process.env.REACT_APP_BACKEND_URL}/users/add_to_cart`, {
-            method: 'POST',
-            credentials: 'include',
-            headers: {
-                'Content-Type': 'application/json',
-            },
-            body: JSON.stringify({ 'bookId': book }),
-        });
-        if (response.ok) {
-            console.log('Book added to cart');
-        } else {
-            if (response.status === 401) {
-                console.log('Please login to add to cart');
-            }
-            else if (response.status === 404) {
-                console.log('Book not found');
-            }
-            else if (response.status === 400) {
-                console.log('Book already in cart');
-            }
-            else {
-                console.log('Failed to add book to cart');
-            }
-        };
-    };
     // Filter the books when any filter changes
     useEffect(() => {
         const filterBooks = async () => {
             let updatedBooks = books;
-
+    
             // Filter by category
             if (selectedCategories.length > 0) {
-                updatedBooks = updatedBooks.filter(book => {
-                    return selectedCategories.includes(book.genere)
-                }
+                updatedBooks = updatedBooks.filter(book =>{
+                    return selectedCategories.includes(book.genere)}
                 );
             }
 
@@ -61,14 +33,14 @@ export default function Shop() {
                 return book.price >= priceRange[0] && book.price <= priceRange[1];
             }
             );
-
+    
             setFilteredBooks(updatedBooks);
         };
-
+    
         // Call the asynchronous filter function
         filterBooks();
-    }, [selectedCategories, priceRange]);
-
+    }, [selectedCategories,priceRange]);
+    
     useEffect(() => {
         async function fetchData() {
             try {
@@ -199,17 +171,17 @@ export default function Shop() {
                         <div className="mb-6">
                             <h4 className="font-medium mb-2">Category</h4>
                             <ul className="space-y-2">
-                                <li><label><input type="checkbox" className="mr-2" onChange={() => { handleCategoryChange('Fiction') }} /> Fiction</label></li>
-                                <li><label><input type="checkbox" className="mr-2" onChange={() => { handleCategoryChange('Non-Fiction') }} /> Non-Fiction</label></li>
-                                <li><label><input type="checkbox" className="mr-2" onChange={() => { handleCategoryChange('Science') }} /> Science</label></li>
-                                <li><label><input type="checkbox" className="mr-2" onChange={() => { handleCategoryChange('History') }} /> History</label></li>
+                                <li><label><input type="checkbox" className="mr-2" onChange={() => {handleCategoryChange('Fiction')}} /> Fiction</label></li>
+                                <li><label><input type="checkbox" className="mr-2" onChange={() => {handleCategoryChange('Non-Fiction')}}/> Non-Fiction</label></li>
+                                <li><label><input type="checkbox" className="mr-2" onChange={() => {handleCategoryChange('Science')}}/> Science</label></li>
+                                <li><label><input type="checkbox" className="mr-2" onChange={() => {handleCategoryChange('History')}}/> History</label></li>
                             </ul>
                         </div>
 
                         {/* Filter by Price */}
                         <div className="mb-6">
                             <h4 className="font-medium mb-2">Price Range</h4>
-                            <input type="range" min="1000" max="15000" className="w-full" onChange={(e) => { handlePriceChange(e) }} />
+                            <input type="range" min="1000" max="15000" className="w-full" onChange={(e)=>{handlePriceChange(e)}}/>
                             <div className="flex justify-between text-sm text-gray-600">
                                 <span>$1000</span>
                                 <span>$15000</span>
@@ -221,10 +193,10 @@ export default function Shop() {
                         <div className="mb-6">
                             <h4 className="font-medium mb-2">Rating</h4>
                             <ul className="space-y-2">
-                                <li><label><input type="radio" name="rating" className="mr-2" onChange={() => { handleRatingChange(4) }} /> 4 stars & up</label></li>
-                                <li><label><input type="radio" name="rating" className="mr-2" onChange={() => { handleRatingChange(3) }} /> 3 stars & up</label></li>
-                                <li><label><input type="radio" name="rating" className="mr-2" onChange={() => { handleRatingChange(2) }} /> 2 stars & up</label></li>
-                                <li><label><input type="radio" name="rating" className="mr-2" onChange={() => { handleRatingChange(1) }} /> 1 star & up</label></li>
+                                <li><label><input type="radio" name="rating" className="mr-2" onChange={()=>{handleRatingChange(4)}}/> 4 stars & up</label></li>
+                                <li><label><input type="radio" name="rating" className="mr-2" onChange={()=>{handleRatingChange(3)}}/> 3 stars & up</label></li>
+                                <li><label><input type="radio" name="rating" className="mr-2" onChange={()=>{handleRatingChange(2)}}/> 2 stars & up</label></li>
+                                <li><label><input type="radio" name="rating" className="mr-2" onChange={()=>{handleRatingChange(1)}}/> 1 star & up</label></li>
                             </ul>
                         </div>
 
@@ -241,12 +213,12 @@ export default function Shop() {
                     {/* Right Column: Books */}
                     <div className="md:col-span-3">
                         <div className="grid grid-cols-2 md:grid-cols-3 gap-6">
-                            {currentBooks.map((book, index) => (
+                            {currentBooks.map((book,index) => (
                                 <div key={index} className="bg-white p-4 rounded-lg border">
                                     <img src={book.imageUrl} alt={book.title} className="mb-4 w-full h-48 object-cover rounded-md" />
                                     <h3 className="text-lg font-semibold mb-2">{book.title}</h3>
                                     <p className="text-gray-500 mb-2">{book.price}</p>
-                                    <button className="bg-blue-600 text-white py-2 px-4 rounded hover:bg-blue-700" onClick={() => { addToCart(book._id) }}>Add to Cart</button>
+                                    <button className="bg-blue-600 text-white py-2 px-4 rounded hover:bg-blue-700">Add to Cart</button>
                                 </div>
                             ))}
                         </div>
