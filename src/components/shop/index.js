@@ -2,12 +2,16 @@ import React, { useState, useEffect } from 'react';
 import logo from "assets/img/logo.png";
 import { Link } from 'react-router-dom';
 import { filter } from '@chakra-ui/system';
+import { useLocation } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 
 export default function Shop() {
+    const Router = useNavigate();
 
     const [currentPage, setCurrentPage] = useState(1);
     const [books, setBooks] = useState([]);
     const [filteredBooks, setFilteredBooks] = useState([]);
+    const location = useLocation();
 
     // Filter states
     const [selectedCategories, setSelectedCategories] = useState([]);
@@ -15,6 +19,26 @@ export default function Shop() {
     const [selectedRating, setSelectedRating] = useState(null);
     const [availability, setAvailability] = useState(null);
 
+
+    const fetchData = async (queryName) => {
+        try {
+            const response = await fetch(`${process.env.REACT_APP_BACKEND_URL}/books?name=${queryName}`);
+            if (!response.ok) {
+                throw new Error('Network response was not ok');
+            }
+            const data = await response.json();
+            setBooks(data);
+            console.log(books);
+        } catch (error) {
+            console.log('There was a problem with your fetch operation:', error);
+        }
+    };
+
+    useEffect(() => {
+        const query = new URLSearchParams(location.search).get('q') || '';
+        setBooks(null);
+        fetchData(query);
+    }, [location.search]);
 
     const addToCart = async (book) => {
         const response = await fetch(`${process.env.REACT_APP_BACKEND_URL}/users/add_to_cart`, {
@@ -182,6 +206,11 @@ export default function Shop() {
                             type="text"
                             placeholder="Search..."
                             className="px-6 py-3 w-full rounded-l-full focus:outline-none"
+                            onKeyDown={(e) => {
+                                if (e.key === "Enter") {
+                                  Router(`?q=${e.target.value}`);
+                                }
+                            }}
                         />
                         <button className="px-8 py-3 bg-orange-100 hover:bg-orange-200 rounded-full">
                             Search
