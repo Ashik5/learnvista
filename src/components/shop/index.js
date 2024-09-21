@@ -10,11 +10,12 @@ export default function Shop() {
     const [currentPage, setCurrentPage] = useState(1);
     const [books, setBooks] = useState([]);
     const [filteredBooks, setFilteredBooks] = useState([]);
+    const [search, setSearch] = useState("");
     const location = useLocation();
 
     // Filter states
     const [selectedCategories, setSelectedCategories] = useState([]);
-    const [priceRange, setPriceRange] = useState([10, 100]);
+    const [priceRange, setPriceRange] = useState([12000, 15000]);
     const [selectedRating, setSelectedRating] = useState(null);
     const [availability, setAvailability] = useState(null);
 
@@ -26,8 +27,7 @@ export default function Shop() {
                 throw new Error('Network response was not ok');
             }
             const data = await response.json();
-            setBooks(data);
-            console.log(books);
+            setFilteredBooks(data);
         } catch (error) {
             console.log('There was a problem with your fetch operation:', error);
         }
@@ -35,7 +35,7 @@ export default function Shop() {
 
     useEffect(() => {
         const query = new URLSearchParams(location.search).get('q') || '';
-        setBooks(null);
+        setBooks([]);
         fetchData(query);
     }, [location.search]);
 
@@ -89,7 +89,7 @@ export default function Shop() {
     
         // Call the asynchronous filter function
         filterBooks();
-    }, [selectedCategories,priceRange]);
+    }, [selectedCategories,priceRange,books]);
     
     useEffect(() => {
         async function fetchData() {
@@ -204,13 +204,18 @@ export default function Shop() {
                             type="text"
                             placeholder="Search..."
                             className="px-6 py-3 w-full rounded-l-full focus:outline-none"
+                            onChange={(e)=>{
+                                setSearch(e.target.value);
+                            }}
                             onKeyDown={(e) => {
                                 if (e.key === "Enter") {
                                   Router(`?q=${e.target.value}`);
                                 }
                             }}
                         />
-                        <button className="px-8 py-3 bg-orange-100 hover:bg-orange-200 rounded-full">
+                        <button onClick={()=>{
+                            Router(`?q=${search}`);
+                        }} className="px-8 py-3 bg-orange-100 hover:bg-orange-200 rounded-full">
                             Search
                         </button>
                     </div>
