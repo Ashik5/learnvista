@@ -1,8 +1,9 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import logo from "assets/img/logo.png";
-import book from "assets/img/books/Carbonel.jpg";
 import book2 from "assets/img/books/boo2.jpg";
-export default function Allbooks() {
+import { Link } from 'react-router-dom';
+
+export default function Landing() {
     const features = [
         { icon: '🎁', text: 'Free gift wrapping' },
         { icon: '🛍️', text: 'online ordering' },
@@ -10,13 +11,23 @@ export default function Allbooks() {
         { icon: '🚀', text: 'retures & exchanges' },
         { icon: '📦', text: 'fast delivery' },
     ];
-    const cardData = [
-        { title: 'Card 1', content: 'Content for card 1', rating: 4.5 },
-        { title: 'Card 2', content: 'Content for card 2', rating: 4.5 },
-        { title: 'Card 3', content: 'Content for card 3', rating: 4.5 },
-        { title: 'Card 4', content: 'Content for card 4', rating: 4.5 },
-        { title: 'Card 5', content: 'Content for card 5', rating: 4.5 },
-    ];
+    const [cardData, setCardData] = useState([]);
+
+    useEffect(() => {
+        async function fetchData() {
+            try {
+                const response = await fetch(`${process.env.REACT_APP_BACKEND_URL}/books`);
+                if (!response.ok) {
+                    throw new Error('Network response was not ok');
+                }
+                const data = await response.json();
+                setCardData(data);
+            } catch (error) {
+                console.error('There was a problem with your fetch operation:', error);
+            }
+        }
+        fetchData();
+    }, []);
     const pricingData = [
         {
             plan: 'Basic',
@@ -85,7 +96,6 @@ export default function Allbooks() {
         },
 
     ];
-
     return (
         <>
             <div
@@ -106,13 +116,13 @@ export default function Allbooks() {
                                 </a>
                             </li>
                             <li>
-                                <a href="#" className=" hover:text-gray-300">
-                                    About
-                                </a>
+                                <Link to="shop" className=" hover:text-gray-300">
+                                    Shop
+                                </Link>
                             </li>
                             <li>
                                 <a href="#" className=" hover:text-gray-300">
-                                    Services
+                                    About
                                 </a>
                             </li>
                             <li>
@@ -192,23 +202,23 @@ export default function Allbooks() {
                         {cardData.map((card, index) => (
                             <div
                                 key={index}
-                                className="group relative min-w-[300px] bg-white shadow-lg shadow-black/5 p-2 rounded-lg text-center rounded-xl cursor-pointer"
+                                className="group relative w-fit bg-white shadow-lg shadow-black/5 p-2 rounded-lg text-center rounded-xl cursor-pointer"
                             >
-                                <img src={book2} alt="book" className='rounded-md' />
+                                <img src={card.imageUrl} alt="book" className='rounded-md max-w-48' />
                                 <div className="absolute top-4 -right-5 text-yellow-400 bg-white text-xs font-bold px-3 py-1.5 rounded-full z-10">
                                     ★ {card.rating}
                                 </div>
                                 <div className="hidden group-hover:flex absolute w-full h-full bg-black/30 bottom-1/2 left-1/2 transform -translate-x-1/2 translate-y-1/2 px-6 py-2 justify-center items-center gap-1.5 rounded-xl">
-                                    <p className='bg-white px-8 py-2'>$20</p>
+                                    <p className='bg-white px-8 py-2'>${card.price}</p>
                                     <p className='bg-white p-2 hover:bg-black'>🛒</p>
                                 </div>
                             </div>
                         ))}
                     </div>
                 </div>
-                <a>
+                <Link to='shop'>
                     <button className="bg-black py-2 px-4 text-white">See all</button>
-                </a>
+                </Link>
             </div>
             <div className="w-full py-16 flex flex-col items-center">
                 {/* Heading */}
@@ -298,64 +308,6 @@ export default function Allbooks() {
                     </button>
                 </div>
             </div>
-            <footer className="py-12">
-                <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-                    <div className="grid grid-cols-1 md:grid-cols-4 gap-8">
-                        {/* Column 1: Company Logo and Description */}
-                        <div className='flex flex-col gap-5 items-start'>
-                            <div className='flex justify-center items-center gap-3'>
-                                <img src={logo} alt="Company Logo" className="w-10" />
-                                <p className='font-semibold'>Learn<span className='font-medium'>Vista</span></p>
-                            </div>
-                            <p className="text-gray-400 text-sm">
-                                Our company provides innovative solutions to help businesses grow
-                                and thrive in the digital world. We are committed to delivering
-                                excellence through our services.
-                            </p>
-                        </div>
-
-                        {/* Column 2: Quick Links */}
-                        <div className='w-fit'>
-                            <h3 className="text-lg font-semibold mb-4">Quick Links</h3>
-                            <ul className="space-y-2">
-                                <li><a href="#" className="text-gray-400 hover:text-black">About Us</a></li>
-                                <li><a href="#" className="text-gray-400 hover:text-black">Services</a></li>
-                                <li><a href="#" className="text-gray-400 hover:text-black">Contact</a></li>
-                                <li><a href="#" className="text-gray-400 hover:text-black">Blog</a></li>
-                            </ul>
-                        </div>
-
-                        {/* Column 3: Resources */}
-                        <div className='w-fit'>
-                            <h3 className="text-lg font-semibold mb-4">Resources</h3>
-                            <ul className="space-y-2">
-                                <li><a href="#" className="text-gray-400 hover:text-black">Help Center</a></li>
-                                <li><a href="#" className="text-gray-400 hover:text-black">Privacy Policy</a></li>
-                                <li><a href="#" className="text-gray-400 hover:text-black">Terms of Service</a></li>
-                                <li><a href="#" className="text-gray-400 hover:text-black">FAQs</a></li>
-                            </ul>
-                        </div>
-
-                        {/* Column 4: Social Media */}
-                        <div className='w-fit'>
-                            <h3 className="text-lg font-semibold mb-4">Follow Us</h3>
-                            <ul className="space-y-2">
-                                <li><a href="#" className="text-gray-400 hover:text-black">Facebook</a></li>
-                                <li><a href="#" className="text-gray-400 hover:text-black">Twitter</a></li>
-                                <li><a href="#" className="text-gray-400 hover:text-black">LinkedIn</a></li>
-                                <li><a href="#" className="text-gray-400 hover:text-black">Instagram</a></li>
-                            </ul>
-                        </div>
-                    </div>
-
-                    {/* Bottom Footer Section */}
-                    <div className="mt-8 pt-6 text-center">
-                        <p className="text-gray-500 text-sm">
-                            &copy; {new Date().getFullYear()} LearnVista. All rights reserved.
-                        </p>
-                    </div>
-                </div>
-            </footer>
         </>
-    );
-};
+    )
+}

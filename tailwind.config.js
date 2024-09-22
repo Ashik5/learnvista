@@ -4,6 +4,10 @@ module.exports = {
   content: ["./src/**/*.{js,jsx,ts,tsx}"],
   theme: {
     extend: {
+      backgroundImage: {
+        'hero': 'url("/src/assets/img/hero bg.svg")',
+        'newsletter': 'url("/src/assets/img/background/newsletterbg.svg")',
+      },
       width: {
         "1p": "1%",
         "2p": "2%",
@@ -107,7 +111,6 @@ module.exports = {
       },
       fontFamily: {
         poppins: ["Poppins", "sans-serif"],
-        dm: ["DM Sans", "sans-serif"],
       },
       boxShadow: {
         "3xl": "14px 17px 40px 4px",
@@ -136,6 +139,7 @@ module.exports = {
     },
     colors: () => ({
       white: "#ffffff",
+      black: "#000000",
       lightPrimary: "#F4F7FE",
       blueSecondary: "#37ED81",
       brandLinear: "#87F4B3",
@@ -324,5 +328,22 @@ module.exports = {
       },
     }),
   },
-  plugins: [require("tailwindcss-rtl")],
+  plugins: [
+    require("tailwindcss-rtl"),
+    function ({ addUtilities }) {
+      addUtilities(
+        {
+          '.scrollbar-hidden': {
+            'overflow-x': 'auto',
+            '-ms-overflow-style': 'none',
+            'scrollbar-width': 'none',
+          },
+          '.scrollbar-hidden::-webkit-scrollbar': {
+            display: 'none',
+          },
+        },
+        ['responsive', 'hover']
+      );
+    },
+  ],
 };

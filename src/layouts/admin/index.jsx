@@ -5,6 +5,7 @@ import Sidebar from "components/sidebar";
 import Dashboard from "views/admin/default";
 import ProfileOverview from "views/admin/profile";
 import Books from "views/admin/books";
+import Addbooks from "views/addbooks";
 
 export default function Admin(props) {
   const { ...rest } = props;
@@ -32,11 +33,12 @@ export default function Admin(props) {
               brandText="Dashboard"
               {...rest}
             />
-            <div className="pt-5s mx-auto mb-auto h-full min-h-[84vh] p-2 md:pr-2">
+            <div className="pt-5s mx-auto mb-auto h-full min-h-[88vh] p-2 md:pr-2">
               <Routes>
                 <Route path="/default" element={<Dashboard/>} />
                 <Route path="/profile" element={<ProfileOverview/>} />
                 <Route path="/books" element={<Books/>} />
+                <Route path="/addbooks" element={<Addbooks />} />
                 <Route
                   path="/"
                   element={<Navigate to="/admin/default" replace />}

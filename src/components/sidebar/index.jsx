@@ -28,7 +28,7 @@ const Sidebar = ({ open, onClose }) => {
 
       <ul className="mb-auto pt-1">
         <Links routes={routes} />
-        <Link to="/addbooks">
+        <Link to="/admin/addbooks">
             <div className="relative mb-3 flex hover:cursor-pointer">
               <li
                 className="my-[3px] flex cursor-pointer items-center px-8"
