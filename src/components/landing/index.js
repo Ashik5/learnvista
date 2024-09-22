@@ -262,14 +262,14 @@ export default function Landing() {
                                 </Link>
                             </li>
                             <li>
-                                <a href="#" className=" hover:text-gray-300">
+                            <Link to="/home/about" className=" hover:text-gray-300">
                                     About
-                                </a>
+                                </Link>
                             </li>
                             <li>
-                                <a href="#" className=" hover:text-gray-300">
+                            <Link to="/home/contact" className=" hover:text-gray-300">
                                     Contact
-                                </a>
+                                </Link>
                             </li>
                         </ul>
                     </div>

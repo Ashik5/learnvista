@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
-import logo from 'assets/svg/logo.svg';
+import logo from "assets/img/logo.png";
 import book from 'assets/img/books/Carbonel.jpg';
 import { useParams } from 'react-router-dom';
 
