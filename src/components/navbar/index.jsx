@@ -17,7 +17,6 @@ const Navbar = (props) => {
         method: 'POST',
         credentials: 'include',
       });
-
       if (response.ok) {
         Router('/auth');
       } else {
