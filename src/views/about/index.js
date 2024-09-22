@@ -1,7 +1,7 @@
 import { Link } from 'react-router-dom';
 import React from "react";
 import cout from 'assets/svg/checkout.svg'
-import logo from 'assets/svg/logo.svg';
+import logo from "assets/img/logo.png";
 import Home from 'assets/svg/home.svg'
 import about from 'assets/svg/about.svg'
 

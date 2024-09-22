@@ -4,12 +4,16 @@ import { Routes, Route, Navigate } from "react-router-dom";
 import Landing from 'components/landing';
 import Shop from 'components/shop';
 import Singlebook from 'components/singlebook'
+import About from 'views/about';
+import Contact from 'views/contact';
 
 export default function Home() {
     return (
         <>
             <Routes>
                 <Route path="shop" element={<Shop />} />
+                <Route path="about" element={<About />} />
+                <Route path="contact" element={<Contact />} />
                 <Route path="/singlebook/:bookId" element={<Singlebook />} />
                 <Route path="/" element={<Landing />} />
                 
