@@ -10,7 +10,7 @@ export default function Home() {
         <>
             <Routes>
                 <Route path="shop" element={<Shop />} />
-                <Route path="singlebook" element={<Singlebook />} />
+                <Route path="/singlebook/:bookId" element={<Singlebook />} />
                 <Route path="/" element={<Landing />} />
                 
             </Routes>

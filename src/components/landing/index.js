@@ -371,6 +371,7 @@ export default function Landing() {
                     <div className="flex space-x-8 overflow-x-auto py-6 scrollbar-hidden">
                         {cardData.map((card, index) => (
                             <div
+                                onClick={() => navigate(`singlebook/${card._id}`)}
                                 key={index}
                                 className="group relative w-fit bg-white shadow-lg shadow-black/5 p-2 rounded-lg text-center rounded-xl cursor-pointer border"
                             >
