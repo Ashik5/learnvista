@@ -8,6 +8,7 @@ import AddBook from "views/addbooks";
 import About from "views/about"
 import Contact from "views/contact";
 import Payment from "views/payment"
+import Contact from "views/contact"
 
 
 const App = () => {
@@ -23,6 +24,7 @@ const App = () => {
 
 
       <Route path="payment" element={<Payment />} />
+      <Route path="contact" element={<Contact />} />
       
 
 
