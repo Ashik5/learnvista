@@ -6,6 +6,7 @@ import Checkout from "views/checkout";
 import Home from "views/landing/home";
 import AddBook from "views/addbooks";
 import Payment from "views/payment"
+import Contact from "views/contact"
 
 const App = () => {
   return (
@@ -16,6 +17,7 @@ const App = () => {
       <Route path="checkout" element={<Checkout />} />
 
       <Route path="payment" element={<Payment />} />
+      <Route path="contact" element={<Contact />} />
       
 
       <Route path="auth/*" element={<AuthLayout />} />
